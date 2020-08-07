@@ -20,7 +20,6 @@ class IntakeViewSet(viewsets.ModelViewSet):
     queryset = Intake.objects.all()
     serializer_class = IntakeSerializer
 
-
 class ConsumerViewSet(viewsets.ModelViewSet):
     queryset = Consumer.objects.all()
     serializer_class = ConsumerSerializer
