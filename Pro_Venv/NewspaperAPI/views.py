@@ -20,11 +20,6 @@ class IntakeViewSet(viewsets.ModelViewSet):
     queryset = Intake.objects.all()
     serializer_class = IntakeSerializer
 
-    def save(self, Newspaper, *args, **kwargs):
-        super(Intake, self).save(*args, **kwargs)
-        self.total = newspaper.wh_price * self.qty
-        self.save()
-
 
 class ConsumerViewSet(viewsets.ModelViewSet):
     queryset = Consumer.objects.all()

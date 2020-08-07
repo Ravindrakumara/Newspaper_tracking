@@ -46,7 +46,19 @@ class Intake(models.Model):
 		qty		  	= models.IntegerField(default=0)
 		qty_return 	= models.IntegerField(default=0)
 		total 		= models.IntegerField(default=0)
-def save(self, *args, **kwargs):
-            super(Intake, self).save(*args, **kwargs)
-            self.total = self.newspaper.wh_price * self.qty
-            self.save()
+		def save(self,*args,**kwargs):
+			self.total = self.newspaper.wh_price * (self.qty - self.qty_return)
+			super(Intake,self).save(*args, **kwargs)
+
+
+
+class Consumer_order(models.Model):
+		name	= models.ForeignKey(Consumer,related_name="Consumer_name", on_delete=models.CASCADE)
+		ac_no	= models.ManyToManyField(Consumer, related_name="Consumer_ac_no")
+		newspaper = models.ForeignKey(Newspaper, on_delete=models.CASCADE)
+		added_date = models.DateField(max_length=32,auto_now_add=True)
+
+		#def __init__(self, arg):
+			#super(Consumer_oder, self).__init__()
+			#self.arg = arg
+		

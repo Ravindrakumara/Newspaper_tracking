@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'django_apscheduler',
+    'django_celery_beat',
     'rest_framework',
     'NewspaperAPI',
 ]
