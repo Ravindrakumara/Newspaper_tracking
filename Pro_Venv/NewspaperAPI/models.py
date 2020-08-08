@@ -36,13 +36,13 @@ class Consumer (models.Model):
 		address = models.CharField(max_length=32)
 		telephone = models.CharField(max_length=32)
 		email = models.CharField(max_length=32)
-		ac_no = models.IntegerField(default=0)
+		#ac_no = models.CharField(blank=True,max_length=254) #IntegerField(default=0)
 		def __str__(self):
 			return self.name
 
 class Intake(models.Model):
 		added_date 	= models.DateField(max_length=32,auto_now_add=True)
-		newspaper 	= models.ForeignKey(Newspaper, on_delete=models.CASCADE)
+		newspaper 	= models.ForeignKey(Newspaper,on_delete=models.CASCADE)
 		qty		  	= models.IntegerField(default=0)
 		qty_return 	= models.IntegerField(default=0)
 		total 		= models.IntegerField(default=0)
@@ -53,12 +53,17 @@ class Intake(models.Model):
 
 
 class Consumer_order(models.Model):
-		name	= models.ForeignKey(Consumer,related_name="Consumer_name", on_delete=models.CASCADE)
-		ac_no	= models.ManyToManyField(Consumer, related_name="Consumer_ac_no")
-		newspaper = models.ForeignKey(Newspaper, on_delete=models.CASCADE)
+		name	= models.ForeignKey(Consumer, on_delete=models.CASCADE)
+		ac_no	= models.IntegerField(default=0)
+		newspaper = models.ManyToManyField(Newspaper,related_name="Consumer_ac_no")
 		added_date = models.DateField(max_length=32,auto_now_add=True)
 
-		#def __init__(self, arg):
+		def __str__(self):
+			return str(self.ac_no)
 			#super(Consumer_oder, self).__init__()
 			#self.arg = arg
-		
+
+class Daily_Cart(models.Model):
+        ac_no       = models.ForeignKey(Consumer_order, unique=True, on_delete=models.DO_NOTHING)
+        newspaper   = models.ManyToManyField(Consumer_order,related_name="Consumer_ac_no")
+        added_date  = models.DateTimeField(max_length=32,auto_now_add=True)
