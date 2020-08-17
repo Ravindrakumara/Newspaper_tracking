@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django_apscheduler',
     'django_celery_beat',
     'rest_framework',
-    'NewspaperAPI',
+    'NewspaperAPI.apps.NewspaperapiConfig',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +69,6 @@ CORS_ORIGIN_WHITELIST = [
 
 DATABASES = {
     'default': {
-
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'npt',
         'USER': 'postgres',

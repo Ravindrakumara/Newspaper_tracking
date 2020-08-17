@@ -2,7 +2,12 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import Model
 from django.contrib.auth.models import User
-import datetime
+from datetime import datetime
+from celery.schedules import crontab
+from celery.task import periodic_task
+import os
+from apscheduler.schedulers.background import BackgroundScheduler
+
 
 Language =(
     ("Spanish", "Spanish"),
@@ -54,16 +59,18 @@ class Intake(models.Model):
 
 class Consumer_order(models.Model):
 		name	= models.ForeignKey(Consumer, on_delete=models.CASCADE)
-		ac_no	= models.IntegerField(default=0)
+		ac_no	= models.CharField(max_length=32)
 		newspaper = models.ManyToManyField(Newspaper,related_name="Consumer_ac_no")
 		added_date = models.DateField(max_length=32,auto_now_add=True)
 
 		def __str__(self):
 			return str(self.ac_no)
-			#super(Consumer_oder, self).__init__()
-			#self.arg = arg
+
 
 class Daily_Cart(models.Model):
-        ac_no       = models.ForeignKey(Consumer_order, unique=True, on_delete=models.DO_NOTHING)
-        newspaper   = models.ManyToManyField(Consumer_order,related_name="Consumer_ac_no")
+        ac_no       = models.CharField(max_length=32)
+        newspaper   = models.CharField(max_length=32)
         added_date  = models.DateTimeField(max_length=32,auto_now_add=True)
+
+        def __str__(self):
+        		return str(self.added_date)
